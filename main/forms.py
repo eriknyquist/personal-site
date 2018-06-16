@@ -1,11 +1,9 @@
 from django import forms
 
-TITLE_PLACEHOLDER="LIFE CALENDAR"
 DATE_PLACEHOLDER="dd/mm/yyyy"
 
 class CalendarForm(forms.Form):
-    title = forms.CharField(label='Calendar title', max_length=30,
-        widget=forms.TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}))
+    title = forms.CharField(label='Calendar title', max_length=30)
 
     date = forms.DateField(label='Your birthday',
         input_formats=['%d/%m/%Y', '%d-%m-%Y'],
