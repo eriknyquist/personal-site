@@ -1,6 +1,6 @@
 <div style="margin:auto;width:50%">
     <div style="text-align:center">
-        <h1>Generate personalised 90-year life calendar</h1>
+        <h1>Generate your own personalised 90-year life calendar</h1>
     </div>
 
     <p>Tim Urban's original life calendars can be purchased
@@ -32,11 +32,21 @@
 
     {% if messages %}
     <ul class="messages">
-        {% for message in messages %}
-        <p style="color: #ffffff; background-color: #ff0000"> {{ message }} </p>
-        {% endfor %}
+        <div style="text-align:center">
+            {% for message in messages %}
+            <p style="color: #ffffff; background-color: #ff0000"> {{ message }} </p>
+            {% endfor %}
+        </div>
     </ul>
     {% endif %}
+
+    <div style="text-align:center">
+        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
+    </div>
+
+    <div style="text-align:center">
+        <h2> Life Calendar Generator</h2>
+    </div>
 
     <div style="text-align:center">
         <form action="/main/" method=post>
@@ -44,7 +54,7 @@
             {% for field in form %}
             <p>{{ field.label_tag }} {{ field }}</p>
             {% endfor %}
-            <input type="submit" value="Download your calendar" />
+            <input type="submit" value="Download calendar"/>
         </form>
     </div>
 </div>
