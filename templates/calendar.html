@@ -1,15 +1,50 @@
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-</ul>
-{% endif %} 
+<div style="margin:auto;width:50%">
+    <div style="text-align:center">
+        <h1>Generate personalised 90-year life calendar</h1>
+    </div>
 
-<form action="/main/" method=post>
-    {% csrf_token %}
-    {% for field in form %}
-    <p>{{ field.label_tag }} {{ field }}</p>
-    {% endfor %}
-    <input type="submit" value="Submit" />
-</form>
+    <p>Tim Urban's original life calendars can be purchased
+    <a href="https://store.waitbutwhy.com/products/life-calendar-24in-x-36in">here</a>.</p>
+
+    <p>The idea behind Tim's life calendar is that each row in the grid is 52
+    boxes representing a year of your life, and there are 90 rows. Essentially
+    a giant rectangular grid of boxes that fits on a single large poster.</p>
+
+    <p>The <i>problem</i> with this lovely idea is that it's quite difficult to
+    actually find a box the corresponds to a specific date on this giant grid of
+    blank boxes. Some annotation is required to make the calendar useful, and
+    while there is ample space provided for this, it's lot a of work. So, when I
+    discovered that I had essentially paid $20 for the opportunity to spend lots
+    of time annotating a mostly blank poster, I had some ideas for some extra
+    features that make the calendar a bit more practical to use:</p>
+
+    <ul>
+        <li>The box for the first week in each row is annotated with the date
+         of that week's Monday</li>
+
+        <li>Boxes for the week of your birthday are shaded</li>
+
+        <li>Boxes for the week of the new year are shaded darker</li>
+    </ul>
+
+    <p>Using the input fields below, enter your information and download the
+    ready-to-print PDF file containing your personalised life calendar.</p>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <p style="color: #ffffff; background-color: #ff0000"> {{ message }} </p>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div style="text-align:center">
+        <form action="/main/" method=post>
+            {% csrf_token %}
+            {% for field in form %}
+            <p>{{ field.label_tag }} {{ field }}</p>
+            {% endfor %}
+            <input type="submit" value="Download your calendar" />
+        </form>
+    </div>
+</div>
