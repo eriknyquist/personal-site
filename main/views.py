@@ -1,5 +1,6 @@
 import sys
 import os
+import tempfile
 
 from datetime import datetime
 
@@ -28,7 +29,7 @@ def get_name(request):
             # Fetch form data
             date = form.cleaned_data['date']
             title = form.cleaned_data['title']
-            filename = 'my_life_calendar.pdf'
+            filename = tempfile.mktemp()
             dateobj = datetime.combine(date, datetime.min.time())
 
             # Generate PDF file
@@ -37,9 +38,10 @@ def get_name(request):
             # Read PDF file and create response
             with open(filename, 'rb') as fh:
                 resp = HttpResponse(fh.read(), content_type="application/pdf")
-                resp['Content-Disposition'] = ('attachment;filename='
-                    + os.path.basename(filename))
+                resp['Content-Disposition'] = ('attachment;filename=my_life_calendar.pdf')
 
+            os.remove(filename)
+            render(request, 'calendar.html', {'form': form})
             return resp
         else:
             messages.error(request,
