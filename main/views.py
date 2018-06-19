@@ -17,7 +17,10 @@ from generate_life_calendar import gen_calendar
 
 DEFAULT_TITLE = "LIFE CALENDAR"
 
-def get_name(request):
+def ptttl(request):
+    return render(request, 'ptttl.html')
+
+def get_calendar(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
 

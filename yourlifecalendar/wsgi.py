@@ -1,3 +1,5 @@
+
+#!/usr/bin/python3
 """
 WSGI config for yourlifecalendar project.
 

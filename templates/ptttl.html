@@ -1,0 +1,209 @@
+<html>
+<style>
+.codeblock {
+	background-color: #eee;
+	border: 1px solid #999;
+	display: block;
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+ 	padding: 0.5cm;
+}
+
+.heading {
+	text-align: center;
+}
+
+.subheading {
+	text-align: left;
+	margin-top: 1cm;
+}
+
+code {
+	white-space: pre;
+}
+</style>
+
+<body>
+<div style="margin:auto;width:50%">
+    <div class="heading">
+		<h1>Polyphonic Tone Text Transfer Language (PTTTL)</h1>
+	</div>
+
+	<p>The Polyphonic Tone Text Transfer Language (PTTTL) is a way to describe
+    polyphonic melodies, and is a superset of Nokia's
+	<a href="https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language">RTTTL</a>
+	format, used for monophonic ringtones.</p>
+
+	<div class="subheading">
+		<h2>Why?</h2>
+	</div>
+
+	<p>I needed a good way to store simple tones and melodies for some project.
+	RTTTL looked pretty good but only works for monophonic melodies.
+	I needed polyphony.</p>
+
+	<div class="heading">
+		<h1>PTTTL format</h1>
+	</div>
+
+	<p>Valid RTTTL strings are also valid PTTTL strings. A parser that properly handles
+	PTTTL can also handle RTTTL.</p>
+
+	<p>A PTTTL string is made up of three colon-seperated sections; the <b>name</b>
+	section, the <b>default values</b> section, and the <b>data</b> section.</p>
+
+	<p>Whitespace characters, empty lines, and lines beginning with a "#" character
+	are ignored.</p>
+
+	<p>The initial "name" section is intended to contain the name of the ringtone
+	in the original RTTTL format. PTTTL requires this field to be present, to
+	maintain backwards compatibility with RTTTL, but places no constraints on its
+	contents.</p>
+
+	<div class="subheading">
+    	<h2>Default values section</h2>
+	</div>
+
+	<p>The very first statement is the <b>default values</b> section and is identical to
+	the section of the same name from the RTTTL format.</p>
+
+	<div class="subheading">
+    	<h3>Example</h3>
+	</div>
+
+	<div class="codeblock">
+		<code>b=123, d=8, o=4</code>
+	</div>
+
+	<div class="subheading">
+    	<h3>Default values specification</h3>
+	</div>
+
+	<ul>
+		<li><b>b</b> - beat, tempo: tempo in BPM (Beats Per Minute)</li>
+		<li><b>d</b> - duration: default duration of a note if none is specified</li>
+		<li><b>o</b> - octave: default octave of a note if none is specified</li>
+	</ul>
+
+	<div class="subheading">
+    	<h2>Data section</h2>
+	</div>
+
+	<p>Like RTTTL, the data section in a PTTTL string contains comma-seperated values.
+	<i>Unlike</i> RTTTL, where only single notes are separated by commas, the comma
+	seperated values in PTTTL are <i>time slots</i>, where each time slot may contain one
+	or more notes. Multiple notes in a time slot are separated by a vertical pipe
+	character "|".</p>
+
+	<p>Each note in a time slot starts playing simultaneously, and each
+	will stop when its respective duration has elapsed. The current time slot
+	ends when the duration of the longest note has elapsed. A time slot can last
+	for the length of a single measure (4 beats), at most.</p>
+
+	<p>The format of a note is identical to that described by the RTTTL format. Each
+	note includes, in sequence; a duration specifier, a standard music note, either
+	a, b, c, d, e, f or g (optionally followed by '#' or 'b' for sharps and flats),
+	and an octave specifier. If no duration or octave specifier are present, the
+	default applies.</p>
+
+	<div class="subheading">
+    	<h3>Durations</h3>
+	</div>
+
+	<p>Valid values for note duration are:</p>
+
+	<ul>
+	<li><b>1</b> - whole note</li>
+	<li><b>2</b> - half note</li>
+	<li><b>4</b> - quarter note</li>
+	<li><b>8</b> - eighth note</li>
+	<li><b>16</b> - sixteenth note</li>
+	<li><b>32</b> - thirty-second note</li>
+	</ul>
+
+	<p>Dotted rhythm patterns can be formed by adding a period "." either
+	after the note letter (e.g. "c#.", or "c#.5"), or after the octave
+	number (e.g. "c#5.")</p>
+
+	<div class="subheading">
+		<h3>Notes</h3>
+	</div>
+
+	<p>Valid values for note pitch (non case-sensitive):</p>
+
+	<ul>
+		<li><b>P</b> - rest or pause</li>
+		<li><b>A</b></li>
+		<li><b>A#</b> / <b>Bb</b></li>
+		<li><b>B</b> / <b>Cb</b></li>
+		<li><b>C</b></li>
+		<li><b>C#</b> / <b>Db</b></li>
+		<li><b>D</b></li>
+		<li><b>D#</b> / <b>Eb</b></li>
+		<li><b>E</b> / <b>Fb</b></li>
+		<li><b>F</b> / <b>E#</b></li>
+		<li><b>F#</b> / <b>Gb</b></li>
+		<li><b>G</b></li>
+		<li><b>G#</b> / <b>Ab</b></li>
+	</ul>
+
+	<div class="subheading">
+		<h3>Octave</h3>
+	</div>
+
+	<p>Valid values for note octave are between <b>0</b> and <b>8</b>.</p>
+
+	<div class="subheading">
+		<h3>Example</h3>
+	</div>
+
+	<p>Consider the following PTTTL string:</p>
+
+	<div class="codeblock">
+<code>
+# 123 beats-per-minute, default quarter note, default 4th octave
+Test Melody:
+b=123, d=4, o=4:
+
+16c|16e|16g5,
+8p,
+16c|16e|16g5
+</code>
+	</div>
+
+	<p>This would play 3 sixteenth notes simultaneously (C, octave 4; E, octave 4;
+	G, octave 5), followed by an eighth note rest, followed by the same
+	three sixteenth notes again</p>
+
+	<div class="heading">
+		<h1>Sample implementation</h1>
+	</div>
+
+	<p>A sample implementation of a PTTTL parser and polyphonic tone player is provided
+	on github:</p>
+
+	<a href="https://github.com/eriknyquist/ptttl">https://github.com/eriknyquist/ptttl</a>
+
+	<p>Note that the "pygame" module is used to generate the tones,
+	so "pttl.py" will not work if you do not have "pygame" installed.</p>
+
+	<p>"pttl.py" will work on Linux and Windows (untested on OSX), as long as
+	"pygame" is installed.</p>
+
+	<p>"pttl.py" will parse a text file passed on the command line, and play the
+	resulting tones. Try it with some of the included melodies in the "examples"
+	directory:</p>
+
+<div class="codeblock">
+<code>
+python pttl.py examples/polyphonic_example.txt
+</code>
+</div>
+
+	<div style="text-align:center;margin-top:2cm">
+	<footer>
+		<p>Erik Nyquist 2018 <a href="mailto:eknyquist@gmail.com">eknyquist@gmail.com</p>
+	</footer>
+	</div>
+</body>
+</html>

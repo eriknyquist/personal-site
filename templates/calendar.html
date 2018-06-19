@@ -30,6 +30,14 @@
     <p>Using the input fields below, enter your information and download the
     ready-to-print PDF file containing your personalised life calendar.</p>
 
+    <div style="text-align:center;margin-top:2cm">
+        <h2> Life Calendar Generator</h2>
+    </div>
+
+    <div style="text-align:center">
+        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
+    </div>
+
     {% if messages %}
     <ul class="messages">
         <div style="text-align:center">
@@ -41,15 +49,7 @@
     {% endif %}
 
     <div style="text-align:center">
-        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
-    </div>
-
-    <div style="text-align:center">
-        <h2> Life Calendar Generator</h2>
-    </div>
-
-    <div style="text-align:center">
-        <form action="/main/" method=post>
+        <form action="/calendar/" method=post>
             {% csrf_token %}
             {% for field in form %}
             <p>{{ field.label_tag }} {{ field }}</p>
