@@ -4,7 +4,6 @@ import tempfile
 
 from datetime import datetime
 
-from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django import forms
@@ -46,9 +45,6 @@ def get_calendar(request):
             os.remove(filename)
             render(request, 'calendar.html', {'form': form})
             return resp
-        else:
-            messages.error(request,
-                'Invalid date! please write dd/mm/yyyy or dd-mm-yyyy')
 
     # if a GET (or any other method) we'll create a blank form
     else:

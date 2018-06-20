@@ -48,6 +48,10 @@
     </ul>
     {% endif %}
 
+    <div style="text-align:left;color:#ffffff;background-color:#ff0000">
+        {{ form.errors }}
+    </div>
+
     <div style="text-align:center">
         <form action="/calendar/" method=post>
             {% csrf_token %}
@@ -58,9 +62,9 @@
         </form>
     </div>
 
-	<div style="text-align:center;margin-top:2cm">
-	<footer>
-		<p>Erik Nyquist 2018 <a href="mailto:eknyquist@gmail.com">eknyquist@gmail.com</p>
-	</footer>
-	</div>
+    <div style="text-align:center;margin-top:2cm">
+    <footer>
+        <p>Erik Nyquist 2018 <a href="mailto:eknyquist@gmail.com">eknyquist@gmail.com</p>
+    </footer>
+    </div>
 </div>
