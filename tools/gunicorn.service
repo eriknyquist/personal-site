@@ -1,0 +1,10 @@
+[Unit]
+Description=gunicorn daemon
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /home/ubuntu/yourlifecalendar/tools/run_gunicorn.sh
+
+[Install]
+WantedBy=multi-user.target
