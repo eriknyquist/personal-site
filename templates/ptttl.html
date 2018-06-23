@@ -25,6 +25,7 @@ code {
 
 <body>
 <div style="margin:auto;width:50%">
+	{% include "header.html" %}
     <div class="heading">
 		<h1>Polyphonic Tone Text Transfer Language (PTTTL)</h1>
 	</div>
@@ -199,11 +200,6 @@ b=123, d=4, o=4:
 python pttl.py examples/polyphonic_example.txt
 </code>
 </div>
-
-	<div style="text-align:center;margin-top:2cm">
-	<footer>
-		<p>Erik Nyquist 2018 <a href="mailto:eknyquist@gmail.com">eknyquist@gmail.com</p>
-	</footer>
-	</div>
+    {% include "footer.html" %}
 </body>
 </html>

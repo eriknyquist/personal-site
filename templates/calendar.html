@@ -1,4 +1,10 @@
+<html>
+<head>
+</head>
+
+<body>
 <div style="margin:auto;width:50%">
+	{% include "header.html" %}
     <div style="text-align:center">
         <h1>Generate your own personalised 90-year life calendar</h1>
     </div>
@@ -61,10 +67,7 @@
             <input type="submit" value="Download calendar"/>
         </form>
     </div>
-
-    <div style="text-align:center;margin-top:2cm">
-    <footer>
-        <p>Erik Nyquist 2018 <a href="mailto:eknyquist@gmail.com">eknyquist@gmail.com</p>
-    </footer>
-    </div>
+    {% include "footer.html" %}
 </div>
+</body>
+</html>
