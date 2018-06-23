@@ -1,0 +1,48 @@
+<html>
+<head>
+</head>
+
+<style>
+.heading {
+	text-align: center;
+}
+
+.subheading {
+	text-align: left;
+	margin-top: 1cm;
+}
+</style>
+
+<body>
+<div style="margin:auto;width:50%">
+    {% include "header.html" %}
+    <div class="heading">
+        <h1>Wade Nyquist's Prisoner of War Papers</h1>
+    </div>
+
+	{% load static %}
+	<div style="text-align:center">
+		<img src="images/cropped_mug.png">
+	</div>
+
+	<p>My Grandfather, Wade Nyquist, was a German POW from 1943 to 1945. He
+    was eventually persuaded by my Grandmother to recount the whole story so
+    she could write it down.
+    <p>
+
+	<p>At some point, my Grandmother typed up several copies of the original
+    papers and passed them out to her kids. I found one of these copies
+    at my Aunt's house, and scanned each page to have a digital copy for myself</p>
+
+	<p>It's a fascinating piece of history, which you can download here (beware;
+    it's a bit big, just over 60 megabytes. There are only 23 pages but each page
+    is a large-ish image)</p>
+
+	<div style="text-align:center">
+		<a href="/wadenyquist_pdf/">Download Wade Nyquist's POW Papers</a>
+	</div>
+
+    {% include "footer.html" %}
+</div>
+</body>
+</html>

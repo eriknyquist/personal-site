@@ -16,13 +16,19 @@ from generate_life_calendar import gen_calendar
 
 DEFAULT_TITLE = "LIFE CALENDAR"
 
-def wwn(request):
+def index(request):
+    return render(request, 'index.html')
+
+def wadenyquist_pdf(request):
     # Read PDF file and create response
     with open('media/wwn.pdf', 'rb') as fh:
         resp = HttpResponse(fh.read(), content_type="application/pdf")
         resp['Content-Disposition'] = ('inline;filename=WadeNyquistPOWPapers.pdf')
 
     return resp
+
+def wadenyquist(request):
+    return render(request, 'wadenyquist.html')
 
 def ptttl(request):
     return render(request, 'ptttl.html')
