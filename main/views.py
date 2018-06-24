@@ -19,6 +19,9 @@ DEFAULT_TITLE = "LIFE CALENDAR"
 def index(request):
     return render(request, 'index.html')
 
+def lastchance(request):
+    return render(request, 'lastchance.html')
+
 def wadenyquist_pdf(request):
     # Read PDF file and create response
     with open('media/wwn.pdf', 'rb') as fh:
