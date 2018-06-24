@@ -1,0 +1,14 @@
+{
+    "working_directory": "work",
+    "archive_directory": "archive",
+    "skip_empty_repos": false,
+    "max_repo_size_kb": 20000,
+    "clone": false,
+    "github_retries": 10,
+    "github_retry_delay_seconds": 5.0,
+    "poll_delay_seconds": 2.0,
+    "monitor_only": false,
+
+    "repo_handler": "/home/ubuntu/yourlifecalendar/config/site-poacher-handler.py",
+	"github_username": "eriknyquist"
+}

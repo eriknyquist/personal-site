@@ -1,0 +1,9 @@
+[Unit]
+Description=Github poacher daemon
+
+[Service]
+Type=simple
+ExecStart=/home/ubuntu/yourlifecalendar/config/run_poacher.sh
+
+[Install]
+WantedBy=multi-user.target
