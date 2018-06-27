@@ -24,7 +24,7 @@ def lastchance(request):
 
 def wadenyquist_pdf(request):
     # Read PDF file and create response
-    with open('media/wwn.pdf', 'rb') as fh:
+    with open('static/docs/wadenyquist.pdf', 'rb') as fh:
         resp = HttpResponse(fh.read(), content_type="application/pdf")
         resp['Content-Disposition'] = ('inline;filename=WadeNyquistPOWPapers.pdf')
 
