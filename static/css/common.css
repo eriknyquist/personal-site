@@ -1,0 +1,17 @@
+.heading {
+	text-align: center;
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+}
+
+.subheading {
+	text-align: left;
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+}
+
+.main {
+    margin: auto;
+    width: 50%;
+    min-width: 600px;
+}

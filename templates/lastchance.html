@@ -1,16 +1,17 @@
 <html>
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
 </head>
 
 <body>
-<div style="margin:auto;width:50%">
+<div class="main">
     {% include "header.html" %}
-    <div style="text-align:center">
+    <div class="heading">
         <h1>Iminagivalaschance, OK?</h1>
     </div>
-    {% load static %}
 	<div style="text-align:center">
-    	<embed src="{% static "video/lastchance.mp4" %}" width="854", height="480">
+    	<embed src="{% static "video/lastchance.mp4" %}" width="622", height="350">
 	</div>
     {% include "footer.html" %}
 </div>

@@ -1,11 +1,13 @@
 <html>
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
 </head>
 
 <body>
-<div style="margin:auto;width:50%">
+<div class="main">
     {% include "header.html" %}
-    <div style="text-align:center">
+    <div class="heading">
         <h1>Page title</h1>
     </div>
     {% include "footer.html" %}

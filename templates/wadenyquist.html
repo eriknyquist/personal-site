@@ -1,19 +1,11 @@
 <html>
 <head>
-</head> 
-<style>
-.heading {
-    text-align: center;
-}
-
-.subheading {
-    text-align: left;
-    margin-top: 1cm;
-}
-</style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
+</head>
 
 <body>
-<div style="margin:auto;width:50%">
+<div class="main">
     {% include "header.html" %}
     <div class="heading">
         <h1>Wade Nyquist's Prisoner of War Papers</h1>

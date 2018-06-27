@@ -1,0 +1,33 @@
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
+</head>
+
+<body>
+<div class="main">
+    {% include "header.html" %}
+    <div class="heading">
+        <h1>Page title</h1>
+    </div>
+    <script>
+    var socket = new WebSocket('ws://' + window.location.host + '/repos/');
+ 
+    socket.onopen = function open() {
+      console.log('WebSockets connection created.');
+    };
+ 
+    socket.onmessage = function message(event) {
+      repolabel.innerText = event.data;
+    };
+ 
+    if (socket.readyState == WebSocket.OPEN) {
+      socket.onopen();
+    }
+    </script>
+
+	<label id="repolabel">Data</label>
+    {% include "footer.html" %}
+</div>
+</body>
+</html>

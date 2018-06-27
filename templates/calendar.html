@@ -1,20 +1,11 @@
 <html>
 <head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
 </head>
 
-<style>
-.heading {
-	text-align: center;
-}
-
-.subheading {
-	text-align: left;
-	margin-top: 1cm;
-}
-</style>
-
 <body>
-<div style="margin:auto;width:50%">
+<div class="main">
 	{% include "header.html" %}
     <div class="heading">
         <h1>Generate your own personalised 90-year life calendar</h1>

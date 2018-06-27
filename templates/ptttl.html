@@ -1,30 +1,11 @@
 <html>
-<style>
-.codeblock {
-	background-color: #eee;
-	border: 1px solid #999;
-	display: block;
-	margin-top: 1cm;
-	margin-bottom: 1cm;
- 	padding: 0.5cm;
-}
-
-.heading {
-	text-align: center;
-}
-
-.subheading {
-	text-align: left;
-	margin-top: 1cm;
-}
-
-code {
-	white-space: pre;
-}
-</style>
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
+</head>
 
 <body>
-<div style="margin:auto;width:50%">
+<div class="main">
 	{% include "header.html" %}
     <div class="heading">
 		<h1>Polyphonic Tone Text Transfer Language (PTTTL)</h1>
