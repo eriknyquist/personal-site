@@ -1,5 +1,17 @@
 import os
+
 from time import gmtime, strftime
+
+FIFO='/home/ubuntu/poacherfifo'
+
+def write_to_fifo(data):
+    try:
+        fd = os.open(FIFO, os.O_CREAT | os.O_WRONLY | os.O_NONBLOCK)
+        os.write(fd, data)
+        os.close(fd)
+    except OSError as ex:
+        pass
+
 
 def humanize_bytes(size_bytes, precision=1):
     abbrevs = [
@@ -20,17 +32,15 @@ def humanize_bytes(size_bytes, precision=1):
     return '%.*f %s' % (precision, float(size_bytes) / factor, suffix)
 
 def run(repo_path, repo, log):
-    fifo='/home/ubuntu/poacherfifo'
     try:
         size = repo.size
     except:
         size = 0
 
-    if not os.path.exists(fifo):
+    if not os.path.exists(FIFO):
         return False
 
-    with open(fifo, 'w') as fh:
-        fh.write('%s: %s (%s)\n' % (strftime("%Y-%m-%d %H:%M:%S", gmtime()),
-            repo.url, humanize_bytes(size)))
+    write_to_fifo('%s: %s (%s)\n' % (strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+        repo.url, humanize_bytes(repo.size)))
 
     return False

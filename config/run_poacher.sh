@@ -9,4 +9,4 @@ do
 done
 
 cd $POACHER
-python2.7 poacher.py -f $CONFIG
+python2.7 poacher.py -f $CONFIG -v
