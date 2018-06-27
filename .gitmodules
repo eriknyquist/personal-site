@@ -1,3 +1,6 @@
 [submodule "generate_life_calendar"]
 	path = generate_life_calendar
 	url = git@github.com:eriknyquist/generate_life_calendar
+[submodule "GithubPoacher"]
+	path = GithubPoacher
+	url = git@github.com:eriknyquist/GithubPoacher
