@@ -22,6 +22,9 @@ def index(request):
 def lastchance(request):
     return render(request, 'lastchance.html')
 
+def github(request):
+    return render(request, 'github.html')
+
 def wadenyquist_pdf(request):
     # Read PDF file and create response
     with open('static/docs/wadenyquist.pdf', 'rb') as fh:

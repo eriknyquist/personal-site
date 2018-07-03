@@ -5,28 +5,50 @@
 </head>
 
 <body>
+{% include "header.html" %}
 <div class="main">
-    {% include "header.html" %}
     <div class="heading">
         <h1>Page title</h1>
     </div>
     <script>
     var socket = new WebSocket('ws://' + window.location.host + '/repos/');
- 
+
     socket.onopen = function open() {
       console.log('WebSockets connection created.');
     };
- 
+
     socket.onmessage = function message(event) {
       repolabel.innerText = event.data;
     };
- 
+
     if (socket.readyState == WebSocket.OPEN) {
       socket.onopen();
     }
+
+	function toggleScrollbars() {
+        if (document.getElementById("scrollbars").checked) {
+            document.getElementById("feed").style.overflow = "scroll";
+		} else {
+            document.getElementById("feed").style.overflow = "hidden";
+		}
+  	}
+
+    setInterval(function () {
+        document.querySelector("#feed").value += "test\n";
+        if (document.getElementById("scrollbars").checked == false) {
+            document.getElementById("feed").scrollTop = document.getElementById("feed").scrollHeight;
+        }
+    }, 500);
     </script>
 
-	<label id="repolabel">Data</label>
+    <div style="text-align:center">
+	    <textarea id="feed" style="resize:none;overflow:hidden" disabled="true" rows="30" cols="80"></textarea>
+    </div>
+
+    <div style="text-align:center;margin-top:1cm">
+        <input type="checkbox" id="scrollbars" onclick="toggleScrollbars()">
+        <label for="scrollbars">Scrollbars</label>
+    </div>
     {% include "footer.html" %}
 </div>
 </body>

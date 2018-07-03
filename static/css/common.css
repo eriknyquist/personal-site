@@ -1,3 +1,7 @@
+html * {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
 .heading {
 	text-align: center;
 	margin-top: 1cm;
@@ -14,4 +18,40 @@
     margin: auto;
     width: 50%;
     min-width: 600px;
+}
+.codeblock {
+    white-space: pre;
+    background-color: #eee;
+    border: 1px solid #999;
+    display: block;
+    padding: 20px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    min-width: 800px;
+    background-color: #010101;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    margin-top: 12px;
+    color: #f2f2f2;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
 }
