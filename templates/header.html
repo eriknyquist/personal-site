@@ -1,12 +1,10 @@
 <script>
 </script>
 
-<header>
-	<div class="topnav">
-        <a href="/">Home</a>&nbsp;&nbsp;&nbsp;
-        <a href="/calendar/">Life Calendar Generator</a>&nbsp;&nbsp;&nbsp;
-        <a href="/ptttl/">PTTTL</a>&nbsp;&nbsp;&nbsp;
-        <a href="/wadenyquist/">POW papers</a>&nbsp;&nbsp;&nbsp;
-        <a href="/lastchance/">Cube 2</a>
-	</div>
-</header>
+<div class="topnav">
+	<a href="/" class="{% if request.path == '/' %}navactive{% else %}navurl{% endif %}">Home</a>&nbsp;&nbsp;&nbsp;
+	<a href="/calendar/" class="{% if request.path == '/calendar/' %}navactive{% else %}navurl{% endif %}">Calendar Generator</a>&nbsp;&nbsp;&nbsp;
+	<a href="/ptttl/" class="{% if request.path == '/ptttl/' %}navactive{% else %}navurl{% endif %}">PTTTL</a>&nbsp;&nbsp;&nbsp;
+	<a href="/wadenyquist/" class="{% if request.path == '/wadenyquist/' %}navactive{% else %}navurl{% endif %}">POW papers</a>&nbsp;&nbsp;&nbsp;
+	<a href="/lastchance/" class="{% if request.path == '/lastchance/' %}navactive{% else %}navurl{% endif %}">Cube 2</a>
+</div>

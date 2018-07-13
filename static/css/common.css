@@ -29,29 +29,37 @@ html * {
 
 /* Add a black background color to the top navigation */
 .topnav {
+    background-color: #000;
+	border-radius: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
     min-width: 800px;
-    background-color: #010101;
     overflow: hidden;
     text-align: center;
+    font-size: 16px;
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
-    margin-top: 12px;
-    color: #f2f2f2;
-    padding: 2px;
+.navurl {
+	padding: 15px 5px 15px 5px;
+    color: #fff;
     text-decoration: none;
-    font-size: 17px;
+}
+
+.navactive {
+	padding: 15px 5px 15px 5px;
+    color: #00e500;
+    text-decoration: none;
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
+.navurl:hover {
+    background-color: #fff;
+    color: #000;
 }
 
 /* Add a color to the active/current link */
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
+.navurl:active {
+    background-color: #000;
+    color: #fff;
 }

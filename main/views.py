@@ -25,6 +25,9 @@ def lastchance(request):
 def github(request):
     return render(request, 'github.html')
 
+def textgame(request):
+    return render(request, 'textgame.html')
+
 def wadenyquist_pdf(request):
     # Read PDF file and create response
     with open('static/docs/wadenyquist.pdf', 'rb') as fh:
