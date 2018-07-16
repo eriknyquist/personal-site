@@ -7,6 +7,7 @@ urlpatterns = [
     path('lastchance/', views.lastchance, name='lastchance'),
     path('calendar/', views.get_calendar, name='get_calendar'),
     path('github/', views.github, name='github'),
+    path('bf/', views.bf, name='bf'),
     path('textgame/', views.textgame, name='textgame'),
     path('ptttl/', views.ptttl, name='ptttl'),
     path('wadenyquist/', views.wadenyquist, name='wadenyquist'),

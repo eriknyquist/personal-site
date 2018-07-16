@@ -1,6 +1,12 @@
 from django import forms
+from django.forms import ValidationError
 
-DATE_PLACEHOLDER="dd/mm/yyyy"
+DATE_PLACEHOLDER = "dd/mm/yyyy"
+PTTTL_PLACEHOLDER = "Paste RTTTL/PTTTL code here..."
+
+class PTTTLForm(forms.Form):
+    ptttl = forms.CharField(widget=forms.Textarea(attrs={'class': 'multiline_input',
+        'placeholder': PTTTL_PLACEHOLDER, 'id': 'ptttl'}))
 
 class CalendarForm(forms.Form):
     title = forms.CharField(label='Calendar title', max_length=30)
