@@ -4,15 +4,18 @@ import tempfile
 
 from datetime import datetime
 
+from django.utils.encoding import smart_str
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django import forms
 
-from .forms import CalendarForm
+from .forms import CalendarForm, PTTTLForm
 
 sys.path.insert(0, "generate_life_calendar")
+sys.path.insert(0, "ptttl")
 
 from generate_life_calendar import gen_calendar
+from ptttl_audio_encoder import ptttl_to_mp3
 
 DEFAULT_TITLE = "LIFE CALENDAR"
 
@@ -21,6 +24,9 @@ def index(request):
 
 def lastchance(request):
     return render(request, 'lastchance.html')
+
+def bf(request):
+    return render(request, 'bf.html')
 
 def github(request):
     return render(request, 'github.html')
@@ -40,7 +46,28 @@ def wadenyquist(request):
     return render(request, 'wadenyquist.html')
 
 def ptttl(request):
-    return render(request, 'ptttl.html')
+    if request.method == 'POST':
+        form = PTTTLForm(request.POST)
+        if form.is_valid():
+            ptttl_data = form.cleaned_data['ptttl']
+            fd, ftemp = tempfile.mkstemp()
+            ptttl_to_mp3(ptttl_data, ftemp)
+
+            with open(ftemp, 'rb') as fh:
+                mp3_data = fh.read()
+
+            response = HttpResponse(mp3_data, content_type='audio/mpeg')
+            response['Content-Disposition'] = 'attachment; filename=rtttl.mp3'
+            response['Content-Length'] = os.path.getsize(ftemp)
+
+            os.close(fd)
+            os.remove(ftemp)
+
+            return response
+    else:
+        form = PTTTLForm()
+
+    return render(request, 'ptttl.html', {'form': form})
 
 def get_calendar(request):
     # if this is a POST request we need to process the form data

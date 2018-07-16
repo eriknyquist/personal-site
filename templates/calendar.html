@@ -8,10 +8,41 @@
 {% include "header.html" %}
 <div class="main">
     <div class="heading">
-        <h1>Generate your own personalised 90-year life calendar</h1>
+        <h1>Personalised 90-year life calendar generator</h1>
     </div>
 
-    <p>Tim Urban's original life calendars can be purchased
+    <p>Using the input fields below, enter your information and download the
+    ready-to-print PDF file containing your personalised life calendar.</p>
+
+    <div style="text-align:center;margin-bottom:1cm">
+        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        <div style="text-align:center">
+            {% for message in messages %}
+            <p style="color: #ffffff; background-color: #ff0000"> {{ message }} </p>
+            {% endfor %}
+        </div>
+    </ul>
+    {% endif %}
+
+    <div style="text-align:left;color:#ffffff;background-color:#ff0000">
+        {{ form.errors }}
+    </div>
+
+    <div style="text-align:center;background-color:#eee;padding:20px 20px 20px 2px">
+        <form action="/calendar/" method=post>
+            {% csrf_token %}
+            {% for field in form %}
+            <p>{{ field.label_tag }} {{ field }}</p>
+            {% endfor %}
+            <input type="submit" style="margin-top:1cm" value="Download calendar"/>
+        </form>
+    </div>
+
+    <p style="padding-top:20px">Tim Urban's original life calendars can be purchased
     <a target="_blank" href="https://store.waitbutwhy.com/products/life-calendar-24in-x-36in">here</a>.</p>
 
     <p>The idea behind Tim's life calendar is that each row in the grid is 52
@@ -49,40 +80,6 @@
 		<img src="{% static "images/wbw_noprofit.png" %}" width="100%">
 	</div>
 
-    <p>Using the input fields below, enter your information and download the
-    ready-to-print PDF file containing your personalised life calendar.</p>
-
-    <div style="text-align:center;margin-top:2cm">
-        <h2> Life Calendar Generator</h2>
-    </div>
-
-    <div style="text-align:center;margin-bottom:1cm">
-        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
-    </div>
-
-    {% if messages %}
-    <ul class="messages">
-        <div style="text-align:center">
-            {% for message in messages %}
-            <p style="color: #ffffff; background-color: #ff0000"> {{ message }} </p>
-            {% endfor %}
-        </div>
-    </ul>
-    {% endif %}
-
-    <div style="text-align:left;color:#ffffff;background-color:#ff0000">
-        {{ form.errors }}
-    </div>
-
-    <div style="text-align:center">
-        <form action="/calendar/" method=post>
-            {% csrf_token %}
-            {% for field in form %}
-            <p>{{ field.label_tag }} {{ field }}</p>
-            {% endfor %}
-            <input type="submit" style="margin-top:1cm" value="Download calendar"/>
-        </form>
-    </div>
     {% include "footer.html" %}
 </div>
 </body>

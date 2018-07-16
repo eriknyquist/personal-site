@@ -27,6 +27,17 @@ html * {
     padding: 20px;
 }
 
+.multiline_input {
+	resize: none;
+	width: 100%;
+	height: 250px
+}
+
+.output {
+	background-color: #ddd;
+	padding: 5px 5px 5px 5px;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #000;
