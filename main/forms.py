@@ -8,6 +8,20 @@ class PTTTLForm(forms.Form):
     ptttl = forms.CharField(widget=forms.Textarea(attrs={'class': 'multiline_input',
         'placeholder': PTTTL_PLACEHOLDER, 'id': 'ptttl'}))
 
+    sine = forms.BooleanField(required=False,
+        widget=forms.CheckboxInput(attrs={'id':'sine', 'onclick':
+        "exclusiveClick(this, 'square')"}))
+    square = forms.BooleanField(required=False, initial=True,
+        widget=forms.CheckboxInput(attrs={'id':'square', 'onclick':
+        "exclusiveClick(this, 'sine')"}))
+
+    wav = forms.BooleanField(required=False,
+        widget=forms.CheckboxInput(attrs={'id':'wav', 'onclick':
+        "exclusiveClick(this, 'mp3')"}))
+    mp3 = forms.BooleanField(required=False, initial=True,
+        widget=forms.CheckboxInput(attrs={'id':'mp3', 'onclick':
+        "exclusiveClick(this, 'wav')"}))
+
 class CalendarForm(forms.Form):
     title = forms.CharField(label='Calendar title', max_length=30)
 

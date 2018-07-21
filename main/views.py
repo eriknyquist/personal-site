@@ -16,7 +16,7 @@ sys.path.insert(0, "generate_life_calendar")
 sys.path.insert(0, "ptttl")
 
 from generate_life_calendar import gen_calendar, parse_date
-from ptttl_audio_encoder import ptttl_to_mp3
+from ptttl_audio_encoder import ptttl_to_mp3, ptttl_to_wav, SINE_WAVE, SQUARE_WAVE
 
 DEFAULT_TITLE = "LIFE CALENDAR"
 
@@ -53,8 +53,16 @@ def ptttl(request):
             ptttl_data = form.cleaned_data['ptttl']
             fd, ftemp = tempfile.mkstemp()
 
+            wave = SINE_WAVE if form.cleaned_data['sine'] else SQUARE_WAVE
+            if form.cleaned_data['wav']:
+                genfunc = ptttl_to_wav
+                ext = 'wav'
+            else:
+                genfunc = ptttl_to_mp3
+                ext = 'mp3'
+
             try:
-                ptttl_to_mp3(ptttl_data, ftemp)
+                genfunc(ptttl_data, ftemp, 0.5, wave)
             except Exception as e:
                 messages.add_message(request, messages.ERROR, str(e))
                 return render(request, 'ptttl.html', {'form': form})
@@ -63,7 +71,7 @@ def ptttl(request):
                 mp3_data = fh.read()
 
             response = HttpResponse(mp3_data, content_type='audio/mpeg')
-            response['Content-Disposition'] = 'attachment; filename=rtttl.mp3'
+            response['Content-Disposition'] = 'attachment; filename=rtttl.%s' % ext
             response['Content-Length'] = os.path.getsize(ftemp)
 
             os.close(fd)

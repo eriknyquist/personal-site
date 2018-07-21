@@ -37,6 +37,16 @@
         var e = document.getElementById("ptttl");
         e.value = samples[sample];
     }
+
+    function exclusiveClick(box, other) {
+        var value = true
+
+        if (box.checked) {
+            value = false;
+        }
+
+        document.getElementById(other).checked = value;
+    }
     </script>
 </head>
 
@@ -44,14 +54,19 @@
 {% include "header.html" %}
 <div class="main">
     <div class="heading">
-        <h1>RTTTL-to-mp3 converter</h1>
+        <h1>Convert RTTTL to .wav and .mp3 audio</h1>
     </div>
 
-    <p>Paste the contents of an RTTTL file here (or select one of the examples
-    from the drop-down list) to download an mp3 audio file that plays the
-    tones dscribed in the RTTTL text you provided. The audio generated is
-    nothing fancy, just simple sine waves with a very slight attack/decay to
-    avoid nasty clicks and pops. (also converts PTTTL, which is my hacky
+    <p>RTTTL (Ring Tone Text Transfer Language) is a method of storing
+    monophonic melodies in simple text files, used in old Nokia phones to
+    describe ringtones. If you want to convert RTTTL ringtone files into MP3/WAV
+    audio files for use on a modern smartphone (complete with authentic
+    shitty-sounding beeps), you can do it here.</p>
+
+    <p>Paste the contents of an RTTTL file below (or select one of the built-in
+    examples) to download an mp3 audio file that plays the tones dscribed in the
+    RTTTL text you provided. The tones generated have a very slight attack/decay
+    to avoid nasty clicks and pops. (also converts PTTTL, which is my hacky
     extension of RTTTL that allows polyphony, scroll down for a full
     description)</p>
 
@@ -63,9 +78,9 @@
         {% endfor %}
     {% endif %}
 
-    <div style="padding:20px 20px 20px 20px;background-color:#eee">
+    <div style="margin-top:40px;padding:20px 20px 20px 20px;background-color:#eee">
         <form action="/ptttl/" method=post>
-            <div style="text-align:center;padding-bottom:10px">
+            <div style="text-align:center;padding-bottom:25px">
                 <label>Sample RTTTL file: <select id="sampleselector" onchange="selectsample(this.value)">
                     <option selected="selected" value="none">None</option>
                     <option value="monty">Monty Python theme</option>
@@ -76,12 +91,41 @@
                 </select></label>
             </div>
 
+            <div style="display:table;margin:0 auto">
+            <div style="margin-bottom:15px;background-color:#ccc;overflow:hidden;display:table">
+                <div style="float:left;padding-right:30px">
+                    {{ form.sine }}
+                    <label for="sine">Sine wave</label>
+                </div>
+
+                <div style="float:left">
+                    {{ form.square }}
+                    <label for="square">Square wave</label>
+                </div>
+            </div>
+            </div>
+
+            <div style="display:table;margin:0 auto">
+            <div style="margin-bottom:15px;background-color:#ccc;overflow:hidden;display:table">
+                <div style="float:left;padding-right:30px">
+                    {{ form.wav }}
+                    <label for="wav">.wav file</label>
+                </div>
+
+                <div style="float:left">
+                    {{ form.mp3 }}
+                    <label for="mp3">.mp3 file</label>
+                </div>
+            </div>
+            </div>
+
             {% csrf_token %}
             {{ form.ptttl }}
 
             <div style="text-align:center;padding-top:10px">
-                <input type="submit" value="Generate MP3"/>
+                <input type="submit" value="Download audio file"/>
             </div>
+
         </form>
     </div>
 
