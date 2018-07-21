@@ -23,7 +23,22 @@
         "c6,d#6,d6,a#,8a#4,8d,8f,a#,a#,8c,a,c6,a#,p,8d,8f,8a#,d6,d6,8a#,c6," +
         "d#6,d6,a#,8a#4,8d,8f,a#,a#,8c,a,c6,16a#,16d,16a#,16d,16a#,16d,16a#";
 
-    samples["poly1"] = "All Star but it's a Bach chorale:\nd=4,o=5,b=40:\n" +
+    samples["mkombat"] = "mkombat:d=4,o=5,b=70:16a#,16a#,16c#6,16a#,16d#6," +
+        "16a#,16f6,16d#6,16c#6,16c#6,16f6,16c#6,16g#6,16c#6,16f6,16c#6,16g#," +
+        "16g#,16c6,16g#,16c#6,16g#,16d#6,16c#6,16f#,16f#,16a#,16f#,16c#6," +
+        "16f#,16c#6,16c6";
+
+    samples["mimp"] = "MissionImpossible:d=32,o=5,b=125:d6,d#6,d6,d#6,d6,d#6," +
+        "d6,d#6,d6,d#6,d6,d#6,d6,d#6,d6,d#6,d6,d#6,d6,d#6,e6,f#6,d#6,8g.6," +
+        "8g.,8g.,8a#,8c6,8g.,8g.,8f,8f#,8g.,8g.,8a#,8c6,8g.,8g.,8f,8f#,16a#6," +
+        "16g6,2d6,16a#6,16g6,2c#6,16a#6,16g6,2c6,16a#,8c.6,4p,16a#,16g,2f#6," +
+        "16a#,16g,2f6,16a#,16g,2e6,16d#6,8d.6";
+
+    samples["blue"] = "Blue:d=8,o=5,b=140:a,a#,d,g,a#,c6,f,a,4a#,g,a#,d6,d#6," +
+        "g,d6,c6,a#,d,g,a#,c6,f,a,4a#,g,a#,d6,d#6,g,d6,c6,a#,d,g,a#,c6,f,a," +
+        "4a#,g,a#,d6,d#6,g,d6,c6,a#,d,g,a#,a,c,f,2g";
+
+    samples["poly1"] = "AllStarBachChorale:\nd=4,o=5,b=40:\n" +
         "16g3.|16g.|16g4.,\n32g3.|32g.|32d.6|32b.4,\n32g3.|32g.|32b.|32d.,\n" +
         "16g3.|16d.|16g.|16b.,\n32f#.|32a3.|32a.|32d.,\n32g.|32b3.|32d.,\n" +
         "32g.|32b3.|32d.,\n16a3.|16a.|16e.|16c6.,\n32g#.|32b.|32b3.|32d.,\n" +
@@ -97,6 +112,9 @@
             <div style="text-align:center;padding-bottom:25px">
                 <label>Sample RTTTL file: <select id="sampleselector" onchange="selectsample(this.value)">
                     <option selected="selected" value="none">None</option>
+                    <option value="mkombat">Mortal Kombat</option>
+                    <option value="blue">Blue</option>
+                    <option value="mimp">Mission Impossible</option>
                     <option value="monty">Monty Python theme</option>
                     <option value="undersea">Under the sea</option>
                     <option value="auld">Auld lang syne</option>
