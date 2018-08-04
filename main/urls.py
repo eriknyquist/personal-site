@@ -10,6 +10,7 @@ urlpatterns = [
     path('bf/', views.bf, name='bf'),
     path('textgame/', views.textgame, name='textgame'),
     path('ptttl/', views.ptttl, name='ptttl'),
+    path('music/', views.music, name='music'),
     path('wadenyquist/', views.wadenyquist, name='wadenyquist'),
     path('wadenyquist_pdf/', views.wadenyquist_pdf, name='wadenyquist_pdf')
 ]
