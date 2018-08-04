@@ -1,0 +1,1 @@
+33 5 * * 5 certbot renew --post-hook "systemctl reload nginx"
