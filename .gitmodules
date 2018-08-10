@@ -2,7 +2,7 @@
 	path = generate_life_calendar
 	url = git@github.com:eriknyquist/generate_life_calendar
 [submodule "GithubPoacher"]
-	path = GithubPoacher
+	path = poacher
 	url = git@github.com:eriknyquist/GithubPoacher
 [submodule "ptttl"]
 	path = ptttl
