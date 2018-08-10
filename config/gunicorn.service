@@ -4,7 +4,7 @@ Description=gunicorn daemon
 [Service]
 Type=simple
 User=root
-ExecStart=/bin/bash /home/ubuntu/personal-site/tools/run_gunicorn.sh
+ExecStart=/bin/bash /home/ubuntu/personal-site/config/run_gunicorn.sh
 
 [Install]
 WantedBy=multi-user.target
