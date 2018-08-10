@@ -1,11 +1,11 @@
-NAME="yourlifecalendar"
-ME="yourlifecalendar"
-DJANGODIR=/home/ubuntu/yourlifecalendar
+NAME="personal-site"
+ME="personal-site"
+DJANGODIR=/home/ubuntu/personal-site
 SOCKFILE=/var/run/gunicorn.sock
 USER=ubuntu 
 NUM_WORKERS=1
-DJANGO_SETTINGS_MODULE=yourlifecalendar.settings
-DJANGO_WSGI_MODULE=yourlifecalendar.wsgi
+DJANGO_SETTINGS_MODULE=personal-site.settings
+DJANGO_WSGI_MODULE=personal-site.wsgi
 
 echo "Starting $NAME as `whoami`"
 
