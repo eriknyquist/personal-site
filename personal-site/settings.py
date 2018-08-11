@@ -24,7 +24,6 @@ SITE_ROOT = PROJECT_ROOT
 STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 
 STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 MEDIA_URL = '/media/'
 
@@ -44,6 +43,7 @@ STATICFILES_FINDERS = [
 DEBUG = False
 
 ALLOWED_HOSTS = ['ekn.io', 'www.ekn.io']
+PREPEND_WWW = True
 
 # Application definition
 
