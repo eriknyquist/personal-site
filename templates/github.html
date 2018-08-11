@@ -2,53 +2,45 @@
 <head>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script>
+    function updateCounter() {
+        $.getJSON('/rpm/',
+            function (data) {
+                document.getElementById('rpmcounter').innerHTML = data['repos_per_minute'];
+        });
+     }
+
+    $(document).ready(function() {
+       updateCounter();
+       setInterval(updateCounter, 10000);
+    });
+
+    </script>
 </head>
 
 <body>
 {% include "header.html" %}
 <div class="main">
     <div class="heading">
-        <h1>Page title</h1>
-    </div>
-    <script>
-    var socket = new WebSocket('ws://' + window.location.host + '/repos/');
-
-    socket.onopen = function open() {
-      console.log('WebSockets connection created.');
-    };
-
-    socket.onmessage = function message(event) {
-      repolabel.innerText = event.data;
-    };
-
-    if (socket.readyState == WebSocket.OPEN) {
-      socket.onopen();
-    }
-
-	function toggleScrollbars() {
-        if (document.getElementById("scrollbars").checked) {
-            document.getElementById("feed").style.overflow = "scroll";
-		} else {
-            document.getElementById("feed").style.overflow = "hidden";
-		}
-  	}
-
-    setInterval(function () {
-        document.querySelector("#feed").value += "test\n";
-        if (document.getElementById("scrollbars").checked == false) {
-            document.getElementById("feed").scrollTop = document.getElementById("feed").scrollHeight;
-        }
-    }, 500);
-    </script>
-
-    <div style="text-align:center">
-	    <textarea id="feed" style="resize:none;overflow:hidden" disabled="true" rows="30" cols="80"></textarea>
+        <h1>Github RPM (repositories-per-minute) counter</h1>
     </div>
 
-    <div style="text-align:center;margin-top:1cm">
-        <input type="checkbox" id="scrollbars" onclick="toggleScrollbars()">
-        <label for="scrollbars">Scrollbars</label>
+    <div style="text-align:center; margin-bottom:75px">
+        <p>Live tracking of the rate of public repositories being created on
+        github.com (updates every 30 seconds)</p>
     </div>
+    <div style="text-align:center;font-size:70px" id="rpmcounter">
+    </div>
+    <div style="text-align:center;font-size:25px">
+        <p>new public repositories per minute</p>
+    </div>
+</div>
+
+
+<div style="text-align:center;margin-top:75px">
+    <a href="https://github.com/eriknyquist/poacher">How does this work?</a>
 </div>
 {% include "footer.html" %}
 </body>
