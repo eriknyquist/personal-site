@@ -27,10 +27,16 @@ class PoacherMonitor(poacher.GithubPoacher):
     def on_repo(self, repo):
         if repo.fork:
             self.forks += 1
-            self.furl = repo.clone_url
+            try:
+                self.furl = repo.clone_url
+            except:
+                pass
         else:
             self.repos += 1
-            self.url = repo.clone_url
+            try:
+                self.url = repo.clone_url
+            except:
+                pass
 
     def on_repos_processed(self, num):
         minutes = (time.time() - self.updatetime) / 60.0
@@ -56,8 +62,8 @@ class PoacherMonitor(poacher.GithubPoacher):
 
 class ReposPerMinuteMonitor(object):
     def __init__(self, uname, pwd):
-        self.monitor = PoacherMonitor(poll_delay_seconds=10, github_retries=10,
-            github_retry_delay_seconds=2)
+        self.monitor = PoacherMonitor(poll_delay_seconds=10, github_retries=25920,
+            github_retry_delay_seconds=10)
 
         self.monitor.authenticate(uname, pwd)
         self.task = threading.Thread(target=self._monitor_task)
