@@ -1,13 +1,30 @@
 import time
 import threading
+import struct
 import os
 
 import poacher
 
 HISTORY_LEN = 4
+BUFFER_LEN = 50
+RECORD_FILE = "/opt/github_rpm_record.bin"
+
+samples = []
 
 def mean(items):
     return sum(items) / len(items)
+
+def write_samples(samples):
+    data = bytes(b'').join([struct.pack('!Qff', int(t), f, r) for t, f, r in samples])
+    with open(RECORD_FILE, 'ab') as fh:
+        fh.write(data)
+
+def record_sample(timestamp, fpm, rpm):
+    samples.append((int(timestamp), fpm, rpm))
+
+    if len(samples) >= BUFFER_LEN:
+        write_samples(samples)
+        del samples[:]
 
 class PoacherMonitor(poacher.GithubPoacher):
     def __init__(self, *args, **kwargs):
@@ -59,6 +76,7 @@ class PoacherMonitor(poacher.GithubPoacher):
         self.repos = 0
         self.forks = 0
         self.updatetime = time.time()
+        record_sample(self.updatetime, self.fpm, self.rpm)
 
 class ReposPerMinuteMonitor(object):
     def __init__(self, uname, pwd):
