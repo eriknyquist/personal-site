@@ -8,8 +8,23 @@
         $.getJSON('/rpm/',
             function (data) {
                 document.getElementById('rpmcounter').innerHTML = data['repos_per_minute'];
+                document.getElementById('fpmcounter').innerHTML = data['forks_per_minute'];
         });
      }
+
+    function goToFork() {
+        $.getJSON('/rpm/',
+            function (data) {
+                window.open(data['latest_fork_url'],'_blank');
+        });
+    }
+
+    function goToRepo() {
+        $.getJSON('/rpm/',
+            function (data) {
+                window.open(data['latest_url'],'_blank');
+        });
+    }
 
     $(document).ready(function() {
        updateCounter();
@@ -23,22 +38,32 @@
 {% include "header.html" %}
 <div class="main">
     <div class="heading">
-        <h1>Github RPM (repositories-per-minute) counter</h1>
+        <h1>Github repository creation rate counter</h1>
     </div>
 
-    <div style="text-align:center; margin-bottom:75px">
+    <div style="text-align:center;margin-bottom:100px">
         <p>Live tracking of the rate of public repositories being created on
-        github.com (updates every 30 seconds)</p>
+        github.com (note that the 'go to latest' links below may get blocked by
+        your popup blocker)</p>
+   </div>
+    <div style="text-align:center;margin-bottom:10px;font-size:60px" id="rpmcounter">
     </div>
-    <div style="text-align:center;font-size:70px" id="rpmcounter">
+    <div style="text-align:center;margin-bottom:100px;font-size:20px">
+        <p title="A source repository is a brand-new repository with original content">
+        new sources per minute <a href='javascript:goToRepo()'>(go to latest)</a>
+        </p>
     </div>
-    <div style="text-align:center;font-size:25px">
-        <p>new public repositories per minute</p>
+    <div style="text-align:center;margin-bottom:10px;font-size:60px" id="fpmcounter">
+    </div>
+    <div style="text-align:center;font-size:20px">
+        <p title="A fork is a clone of an existing public repository">
+        new forks per minute <a href='javascript:goToFork()'>(go to latest)</a>
+        </p>
     </div>
 </div>
 
 
-<div style="text-align:center;margin-top:75px">
+<div style="text-align:center;margin-top:100px">
     <a href="https://github.com/eriknyquist/poacher" target="_blank">How does this work?</a>
 </div>
 {% include "footer.html" %}

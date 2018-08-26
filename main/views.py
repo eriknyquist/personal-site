@@ -43,7 +43,13 @@ def bf(request):
     return render(request, 'bf.html')
 
 def rpm(request):
-    data = json.dumps({"repos_per_minute": '%.2f' % monitor.rpm()})
+    data = json.dumps({
+        "repos_per_minute": '%.2f' % monitor.rpm(),
+        "forks_per_minute": '%.2f' % monitor.fpm(),
+        "latest_url": monitor.url(),
+        "latest_fork_url": monitor.furl()
+    })
+
     return HttpResponse(data, content_type='application/json')
 
 def github(request):
