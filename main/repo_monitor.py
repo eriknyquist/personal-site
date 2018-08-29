@@ -80,8 +80,8 @@ class PoacherMonitor(poacher.GithubPoacher):
 
 class ReposPerMinuteMonitor(object):
     def __init__(self, uname, pwd):
-        self.monitor = PoacherMonitor(poll_delay_seconds=10, github_retries=25920,
-            github_retry_delay_seconds=10)
+        self.monitor = PoacherMonitor(poll_delay_seconds=10, github_retries=0,
+            github_retry_delay_seconds=30)
 
         self.monitor.authenticate(uname, pwd)
         self.task = threading.Thread(target=self._monitor_task)
