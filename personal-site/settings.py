@@ -40,7 +40,7 @@ STATICFILES_FINDERS = [
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['ekn.io', 'www.ekn.io']
 PREPEND_WWW = True
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'personal-site'
 ]
 
 MIDDLEWARE = [

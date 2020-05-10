@@ -19,7 +19,9 @@ sys.path.insert(0, "ptttl/tones")
 sys.path.insert(0, "poacher")
 sys.path.insert(0, "main")
 sys.path.insert(0, '/opt')
+sys.path.insert(0, 'personal-site')
 
+import settings
 import secrets
 from repo_monitor import ReposPerMinuteMonitor
 from generate_life_calendar import gen_calendar, parse_date
@@ -30,6 +32,12 @@ DEFAULT_TITLE = "LIFE CALENDAR"
 monitor = ReposPerMinuteMonitor(secrets.GITHUB_UNAME, secrets.GITHUB_PWD)
 monitor.start()
 
+audio_dir = os.path.join(settings.STATIC_ROOT, "audio")
+audio_files = os.listdir(audio_dir)
+
+with open('/home/ubuntu/out.txt', 'w') as fh:
+    fh.write(str(audio_files))
+
 def index(request):
     return render(request, 'index.html')
 
@@ -37,7 +45,7 @@ def lastchance(request):
     return render(request, 'lastchance.html')
 
 def music(request):
-    return render(request, 'music.html')
+    return render(request, 'music.html', {"audio_files": audio_files})
 
 def bf(request):
     return render(request, 'bf.html')

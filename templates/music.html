@@ -1,0 +1,28 @@
+<html>
+<head>
+{% include "common.html" %}
+{% load static %}
+</head>
+
+<b dy>
+{% include "header.html" %}
+{% get_static_prefix as STATIC_URL %}
+{% load audio_filename %}
+<div class="main">
+    <div class="heading">
+        <h1>Music!</h1>
+    </div>
+    {% for file in audio_files %}
+        <div style="text-align:center;margin-top:40px;padding:20px 20px 20px 20px;background-color:#eee">
+            <div class="heading">
+                <h2>{{ file | audio_filename}}</h2>
+            </div>
+            <audio controls>
+                <source src="{{ STATIC_URL }}audio/{{ file }}" type="audio/mp3">
+            </audio>
+        </div>
+    {% endfor %}
+</div>
+{% include "footer.html" %}
+</body>
+</html>
