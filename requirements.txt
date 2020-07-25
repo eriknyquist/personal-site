@@ -1,2 +1,4 @@
 Django==2.0.6
 pycairo==1.17.0
+gunicorn
+pygithub
