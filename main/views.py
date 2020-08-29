@@ -71,6 +71,17 @@ def wadenyquist_pdf(request):
 def wadenyquist(request):
     return render(request, 'wadenyquist.html')
 
+def millerfamilyhistory_pdf(request):
+    # Read PDF file and create response
+    with open('static/docs/millerfamilyhistory.pdf', 'rb') as fh:
+        resp = HttpResponse(fh.read(), content_type="application/pdf")
+        resp['Content-Disposition'] = ('inline;filename=MillerFamilyHistory.pdf')
+
+    return resp
+
+def millerfamilyhistory(request):
+    return render(request, 'millerfamilyhistory.html')
+
 def ptttl(request):
     if request.method == 'POST':
         form = PTTTLForm(request.POST)
