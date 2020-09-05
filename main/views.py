@@ -2,6 +2,7 @@ import json
 import sys
 import os
 import tempfile
+import threading
 
 from datetime import datetime
 
@@ -27,17 +28,48 @@ from repo_monitor import ReposPerMinuteMonitor
 from generate_life_calendar import gen_calendar, parse_date
 from ptttl_audio_encoder import ptttl_to_mp3, ptttl_to_wav, SINE_WAVE, SQUARE_WAVE
 
+LIFE_CALENDAR_COUNT_KEY = "calendar_downloads"
+PTTTL_COUNT_KEY = "ptttl_downloads"
+MILLER_HISTORY_COUNT_KEY = "miller_history_downloads"
+POW_PAPERS_COUNT_KEY = "pow_papers_downloads"
+
+JSON_FILE = "/home/ubuntu/personal_site_download_counters.json"
 DEFAULT_TITLE = "LIFE CALENDAR"
 
+json_file_lock = threading.Lock()
 monitor = ReposPerMinuteMonitor(secrets.GITHUB_UNAME, secrets.GITHUB_PWD)
 monitor.start()
 
 audio_dir = os.path.join(settings.STATIC_ROOT, "audio")
 audio_files = os.listdir(audio_dir)
 
-with open('/home/ubuntu/out.txt', 'w') as fh:
-    fh.write(str(audio_files))
+def read_json_file():
+    try:
+        with open(JSON_FILE, 'r') as fh:
+            attrs = json.load(fh)
+    except:
+        attrs = {}
 
+    if LIFE_CALENDAR_COUNT_KEY not in attrs:
+        attrs[LIFE_CALENDAR_COUNT_KEY] = 0
+
+    if PTTTL_COUNT_KEY not in attrs:
+        attrs[PTTTL_COUNT_KEY] = 0
+
+    if MILLER_HISTORY_COUNT_KEY not in attrs:
+        attrs[MILLER_HISTORY_COUNT_KEY] = 0
+
+    if POW_PAPERS_COUNT_KEY not in attrs:
+        attrs[POW_PAPERS_COUNT_KEY] = 0
+
+    return attrs
+
+def write_json_file(attrs):
+    with open(JSON_FILE, 'w') as fh:
+        #json.dump({LIFE_CALENDAR_COUNT_KEY: count + 1}, fh)
+        json.dump(attrs, fh)
+
+# if a GET (or any other method) we'll create a blank form
 def index(request):
     return render(request, 'index.html')
 
@@ -62,6 +94,11 @@ def textgame(request):
 
 def wadenyquist_pdf(request):
     # Read PDF file and create response
+    with json_file_lock: 
+        attrs = read_json_file()
+        attrs[POW_PAPERS_COUNT_KEY] += 1
+        write_json_file(attrs)
+
     with open('static/docs/wadenyquist.pdf', 'rb') as fh:
         resp = HttpResponse(fh.read(), content_type="application/pdf")
         resp['Content-Disposition'] = ('inline;filename=WadeNyquistPOWPapers.pdf')
@@ -73,6 +110,11 @@ def wadenyquist(request):
 
 def millerfamilyhistory_pdf(request):
     # Read PDF file and create response
+    with json_file_lock: 
+        attrs = read_json_file()
+        attrs[MILLER_HISTORY_COUNT_KEY] += 1
+        write_json_file(attrs)
+
     with open('static/docs/millerfamilyhistory.pdf', 'rb') as fh:
         resp = HttpResponse(fh.read(), content_type="application/pdf")
         resp['Content-Disposition'] = ('inline;filename=MillerFamilyHistory.pdf')
@@ -113,6 +155,11 @@ def ptttl(request):
             os.close(fd)
             os.remove(ftemp)
 
+            with json_file_lock: 
+                attrs = read_json_file()
+                attrs[PTTTL_COUNT_KEY] += 1
+                write_json_file(attrs)
+
             return response
     else:
         form = PTTTLForm()
@@ -149,6 +196,12 @@ def get_calendar(request):
 
         os.remove(filename)
         render(request, 'calendar.html', {'form': form})
+
+        with json_file_lock: 
+            attrs = read_json_file()
+            attrs[LIFE_CALENDAR_COUNT_KEY] += 1
+            write_json_file(attrs)
+
         return resp
 
     # if a GET (or any other method) we'll create a blank form
