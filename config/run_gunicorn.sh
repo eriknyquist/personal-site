@@ -11,7 +11,7 @@ echo "Starting $NAME as `whoami`"
 
 cd $DJANGODIR
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+export PYTHONPATH=$DJANGODIR:/home/ubuntu/.local/lib/python3.6/site-packages
 
 # Create the run directory if it doesn't exist
 RUNDIR=$(dirname $SOCKFILE)

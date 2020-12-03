@@ -15,8 +15,6 @@ from django.contrib import messages
 from .forms import CalendarForm, PTTTLForm
 
 sys.path.insert(0, "generate_life_calendar")
-sys.path.insert(0, "ptttl")
-sys.path.insert(0, "ptttl/tones")
 sys.path.insert(0, "poacher")
 sys.path.insert(0, "main")
 sys.path.insert(0, '/opt')
@@ -26,7 +24,8 @@ import settings
 import secrets
 from repo_monitor import ReposPerMinuteMonitor
 from generate_life_calendar import gen_calendar, parse_date
-from ptttl_audio_encoder import ptttl_to_mp3, ptttl_to_wav, SINE_WAVE, SQUARE_WAVE
+from ptttl.audio import ptttl_to_mp3, ptttl_to_wav
+from tones import SINE_WAVE, SQUARE_WAVE
 
 LIFE_CALENDAR_COUNT_KEY = "calendar_downloads"
 PTTTL_COUNT_KEY = "ptttl_downloads"

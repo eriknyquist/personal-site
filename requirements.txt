@@ -1,4 +1,5 @@
 Django==2.0.6
 pycairo==1.17.0
+ptttl==1.0.1
 gunicorn
 pygithub
