@@ -1,4 +1,4 @@
-Django==2.0.6
+Django==2.2.13
 pycairo==1.17.0
 ptttl==1.0.1
 gunicorn
