@@ -1,27 +1,41 @@
 <html>
 <head>
-{% include "common.html" %}
+    {% include "common.html" %}
 {% load static %}
 </head>
 
-<b dy>
+<body>
 {% include "header.html" %}
-{% get_static_prefix as STATIC_URL %}
-{% load audio_filename %}
 <div class="main">
     <div class="heading">
         <h1>Music!</h1>
     </div>
-    {% for file in audio_files %}
-        <div style="text-align:center;margin-top:40px;padding:20px 20px 20px 20px;background-color:#eee">
-            <div class="heading">
-                <h2>{{ file | audio_filename}}</h2>
-            </div>
-            <audio controls>
-                <source src="{{ STATIC_URL }}audio/{{ file }}" type="audio/mp3">
-            </audio>
-        </div>
-    {% endfor %}
+
+    <br>
+    <div class="heading">
+        <h2>Recording project</h2>
+    </div>
+
+    <p>I play drums, as well as record and produce music, for a band called
+    <a href="https://open.spotify.com/artist/5ZzKR8YUhrhKtaUuMT6J4c?si=f56ababf57c54020">Highline Trail</a>,
+    which you can find in all the usual places...</p>
+
+
+    <div style="text-align:center">
+        <p>Highline Trail on <a href="https://open.spotify.com/artist/5ZzKR8YUhrhKtaUuMT6J4c?si=f56ababf57c54020">Spotify</a>!</p>
+        <p>Highline Trail on <a href="https://music.apple.com/us/artist/highline-trail/1565895020">Apple Music</a>!</p>
+        <p>Highline Trail on <a href="https://music.amazon.com/artists/B0943DY2G2/highline-trail?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_FS9BTuYA7Io7R1bQkyOiiEVON">Amazon Music</a>!</p>
+        <p>Highline Trail on <a href="https://www.youtube.com/channel/UCF1Wtfd7GivdFfqISc8sztw">Youtube</a>!</p>
+        <p>Highline Trail on <a href="https://pandora.app.link/t1NAj4Omjkb">Pandora</a>!</p>
+        <br>
+        Contact Highline Trail at <b>highlinetrailmusic@gmail.com</b>.
+    </div>
+
+    <br>
+    <div class="heading">
+        <h2>Personal soundcloud page</h2>
+    </div>
+    My <a href="https://soundcloud.com/eriknyquist">Soundcloud account</a>. Full of unfinished/old/bad/silly personal projects.
 </div>
 {% include "footer.html" %}
 </body>
