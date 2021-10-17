@@ -40,9 +40,9 @@ STATICFILES_FINDERS = [
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['ekn.io', 'www.ekn.io']
+ALLOWED_HOSTS = ['ekn.io', 'www.ekn.io', '.ekn.io']
 PREPEND_WWW = True
 
 # Application definition

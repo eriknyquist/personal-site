@@ -175,6 +175,7 @@ def get_calendar(request):
         # Fetch form data
         date = form.data['date']
         title = form.data['title']
+        age = form.data['age']
         filename = tempfile.mktemp()
 
         try:
@@ -186,7 +187,7 @@ def get_calendar(request):
         dateobj = datetime.combine(dateobj, datetime.min.time())
 
         # Generate PDF file
-        gen_calendar(dateobj, title, filename)
+        gen_calendar(dateobj, title, age, filename)
 
         # Read PDF file and create response
         with open(filename, 'rb') as fh:

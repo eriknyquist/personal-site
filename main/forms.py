@@ -28,3 +28,6 @@ class CalendarForm(forms.Form):
     date = forms.DateField(label='Your birthday',
         input_formats=['%d/%m/%Y', '%d-%m-%Y'],
         widget=forms.TextInput(attrs={'placeholder': DATE_PLACEHOLDER}))
+
+    age = forms.IntegerField(required=False, label='Maximum age in calendar', initial=90, min_value=80, max_value=100)
+

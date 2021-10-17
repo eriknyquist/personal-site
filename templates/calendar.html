@@ -8,14 +8,14 @@
 {% include "header.html" %}
 <div class="main">
     <div class="heading">
-        <h1>Personalised 90-year life calendar generator</h1>
+        <h1>Personalised life calendar generator</h1>
     </div>
 
     <p>Using the input fields below, enter your information and download the
     ready-to-print PDF file containing your personalised life calendar.</p>
 
     <div style="text-align:center;margin-bottom:1cm">
-        <p><b>NOTE: Ideal printing size is 26 inches (width) by 40 inches (height)</b></p>
+        <p><b>Ideal printing size is (23.4x33.1 inches / 594x841 millimetres / A1)</b></p>
     </div>
 
     {% if messages %}
@@ -62,6 +62,8 @@
         <li>Boxes for the week of your birthday are shaded</li>
 
         <li>Boxes for the week of the new year are shaded darker</li>
+
+        <li>Number of calendar rows (years) is configurable between 90-100</li>
     </ul>
 
 	<p>Unfortunately, you'll have to print it yourself; if I were to send you a
