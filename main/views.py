@@ -23,7 +23,7 @@ sys.path.insert(0, 'personal-site')
 import settings
 import secrets
 from repo_monitor import ReposPerMinuteMonitor
-from generate_life_calendar import gen_calendar, parse_date
+from generate_life_calendar import gen_calendar, parse_date, get_darken_until_date
 from ptttl.audio import ptttl_to_mp3, ptttl_to_wav
 from tones import SINE_WAVE, SQUARE_WAVE
 
@@ -176,6 +176,7 @@ def get_calendar(request):
         date = form.data['date']
         title = form.data['title']
         age = form.data['age']
+        darken = 'darken' in form.data
         filename = tempfile.mktemp()
 
         try:
@@ -186,8 +187,13 @@ def get_calendar(request):
 
         dateobj = datetime.combine(dateobj, datetime.min.time())
 
+        if darken:
+            darken_date = get_darken_until_date()
+        else:
+            darken_date = None
+
         # Generate PDF file
-        gen_calendar(dateobj, title, age, filename)
+        gen_calendar(dateobj, title, age, filename, darken_date)
 
         # Read PDF file and create response
         with open(filename, 'rb') as fh:
