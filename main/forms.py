@@ -31,4 +31,4 @@ class CalendarForm(forms.Form):
 
     age = forms.IntegerField(required=False, label='Maximum age in calendar', initial=90, min_value=80, max_value=100)
 
-    darken = forms.BooleanField(required=False, label='Darken weeks before today\'s date', initial=False)
+    darken = forms.BooleanField(required=False, label='Darken weeks before todays date', initial=False)
