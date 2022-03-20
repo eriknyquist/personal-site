@@ -15,6 +15,7 @@ urlpatterns = [
     path('ptttl/', views.ptttl, name='ptttl'),
     path('music/', views.music, name='music'),
     path('wadenyquist/', views.wadenyquist, name='wadenyquist'),
+    path('deepspacetrader/', views.deepspacetrader, name='deepspacetrader'),
     path('wadenyquist_pdf/', views.wadenyquist_pdf, name='wadenyquist_pdf'),
     path('millerfamilyhistory/', views.millerfamilyhistory, name='millerfamilyhistory'),
     path('millerfamilyhistory_pdf/', views.millerfamilyhistory_pdf, name='millerfamilyhistory_pdf'),

@@ -107,6 +107,9 @@ def wadenyquist_pdf(request):
 def wadenyquist(request):
     return render(request, 'wadenyquist.html')
 
+def deepspacetrader(request):
+    return render(request, 'deepspacetrader.html')
+
 def millerfamilyhistory_pdf(request):
     # Read PDF file and create response
     with json_file_lock: 
