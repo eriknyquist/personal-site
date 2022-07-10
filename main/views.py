@@ -91,6 +91,19 @@ def github(request):
 def textgame(request):
     return render(request, 'textgame.html')
 
+def wadenyquist_compressed_pdf(request):
+    # Read PDF file and create response
+    with json_file_lock: 
+        attrs = read_json_file()
+        attrs[POW_PAPERS_COUNT_KEY] += 1
+        write_json_file(attrs)
+
+    with open('static/docs/wadenyquist_compressed.pdf', 'rb') as fh:
+        resp = HttpResponse(fh.read(), content_type="application/pdf")
+        resp['Content-Disposition'] = ('inline;filename=WadeNyquistPOWPapers.pdf')
+
+    return resp
+
 def wadenyquist_pdf(request):
     # Read PDF file and create response
     with json_file_lock: 
