@@ -18,6 +18,7 @@ urlpatterns = [
     path('deepspacetrader/', views.deepspacetrader, name='deepspacetrader'),
     path('wadenyquist_pdf/', views.wadenyquist_pdf, name='wadenyquist_pdf'),
     path('wadenyquist_compressed_pdf/', views.wadenyquist_compressed_pdf, name='wadenyquist_compressed_pdf'),
+    path('resume/', views.get_resume, name='resume'),
     path('millerfamilyhistory/', views.millerfamilyhistory, name='millerfamilyhistory'),
     path('millerfamilyhistory_pdf/', views.millerfamilyhistory_pdf, name='millerfamilyhistory_pdf'),
     url(r'^favicon.ico$',

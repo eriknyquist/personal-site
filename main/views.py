@@ -1,5 +1,6 @@
 import json
 import sys
+import requests
 import os
 import tempfile
 import threading
@@ -114,6 +115,27 @@ def wadenyquist_pdf(request):
     with open('static/docs/wadenyquist.pdf', 'rb') as fh:
         resp = HttpResponse(fh.read(), content_type="application/pdf")
         resp['Content-Disposition'] = ('inline;filename=WadeNyquistPOWPapers.pdf')
+
+    return resp
+
+def get_resume(request):
+    tex_filename = tempfile.mktemp(dir='.') + '.tex'
+    tex_data = requests.get('https://raw.githubusercontent.com/eriknyquist/resume/master/erik_nyquist_cv.tex')
+
+    with open(tex_filename, 'w') as fh:
+        fh.write(tex_data.text)
+
+    pdf_filename = tempfile.mktemp(dir='.')
+    os.system('pdflatex -jobname=%s %s' % (pdf_filename, tex_filename))
+
+    with open('%s.pdf' % pdf_filename, 'rb') as fh:
+        resp = HttpResponse(fh.read(), content_type="application/pdf")
+        resp['Content-Disposition'] = ('inline;filename=erik_nyquist_cv.pdf')
+
+    os.remove(tex_filename)
+    os.remove(pdf_filename + '.pdf')
+    os.remove(pdf_filename + '.aux')
+    os.remove(pdf_filename + '.log')
 
     return resp
 
