@@ -24,7 +24,7 @@ sys.path.insert(0, 'personal-site')
 import settings
 import secrets
 from repo_monitor import ReposPerMinuteMonitor
-from generate_life_calendar import gen_calendar, parse_date, get_darken_until_date
+from generate_life_calendar import gen_calendar, parse_date, parse_darken_until_date
 from ptttl.audio import ptttl_to_mp3, ptttl_to_wav
 from tones import SINE_WAVE, SQUARE_WAVE
 
@@ -226,7 +226,7 @@ def get_calendar(request):
         dateobj = datetime.combine(dateobj, datetime.min.time())
 
         if darken:
-            darken_date = get_darken_until_date()
+            darken_date = parse_darken_until_date('today')
         else:
             darken_date = None
 
