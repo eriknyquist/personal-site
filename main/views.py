@@ -136,6 +136,7 @@ def get_resume(request):
     os.remove(pdf_filename + '.pdf')
     os.remove(pdf_filename + '.aux')
     os.remove(pdf_filename + '.log')
+    os.remove(pdf_filename + '.out')
 
     return resp
 
@@ -231,7 +232,8 @@ def get_calendar(request):
             darken_date = None
 
         # Generate PDF file
-        gen_calendar(dateobj, title, age, filename, darken_date)
+        gen_calendar(dateobj, title, age, filename, darken_date,
+                     subtitle_text="Generated for free at https://www.ekn.io/calendar")
 
         # Read PDF file and create response
         with open(filename, 'rb') as fh:
