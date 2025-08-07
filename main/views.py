@@ -4,6 +4,8 @@ import requests
 import os
 import tempfile
 import threading
+import io
+import subprocess
 
 from datetime import datetime
 
@@ -15,6 +17,8 @@ from django.contrib import messages
 
 from .forms import CalendarForm, PTTTLForm
 
+from pydub import AudioSegment
+
 sys.path.insert(0, "generate_life_calendar")
 sys.path.insert(0, "poacher")
 sys.path.insert(0, "main")
@@ -25,8 +29,6 @@ import settings
 import secrets
 from repo_monitor import ReposPerMinuteMonitor
 from generate_life_calendar import gen_calendar, parse_date, parse_darken_until_date
-from ptttl.audio import ptttl_to_mp3, ptttl_to_wav
-from tones import SINE_WAVE, SQUARE_WAVE
 
 LIFE_CALENDAR_COUNT_KEY = "calendar_downloads"
 PTTTL_COUNT_KEY = "ptttl_downloads"
@@ -35,6 +37,8 @@ POW_PAPERS_COUNT_KEY = "pow_papers_downloads"
 
 JSON_FILE = "/home/ubuntu/personal_site_download_counters.json"
 DEFAULT_TITLE = "LIFE CALENDAR"
+
+PTTTL_CLI_BIN = "/home/ubuntu/personal-site/ptttl_clone/c_implementation/build/ptttl_cli" 
 
 json_file_lock = threading.Lock()
 monitor = ReposPerMinuteMonitor(secrets.GITHUB_UNAME, secrets.GITHUB_PWD)
@@ -162,36 +166,41 @@ def millerfamilyhistory_pdf(request):
 def millerfamilyhistory(request):
     return render(request, 'millerfamilyhistory.html')
 
+def ptttl_to_mp3(ptttl_cli_bin, ptttl_text, wave_type):
+    result = subprocess.run(ptttl_cli_bin + " -w " + wave_type,
+                            input=ptttl_text.encode('ascii'), shell=True,
+                            stdout=subprocess.PIPE)
+
+    if result.returncode != 0:
+        return False, result.stdout.decode('ascii')
+
+    wav_data = io.BytesIO(result.stdout)
+    audio_segment = AudioSegment.from_wav(wav_data)
+    mp3_data = io.BytesIO()
+    audio_segment.export(mp3_data, format="mp3", bitrate="256k")
+    return True, mp3_data.getvalue()
+
 def ptttl(request):
     if request.method == 'POST':
         form = PTTTLForm(request.POST)
         if form.is_valid():
             ptttl_data = form.cleaned_data['ptttl']
-            fd, ftemp = tempfile.mkstemp()
 
-            wave = SINE_WAVE if form.cleaned_data['sine'] else SQUARE_WAVE
-            if form.cleaned_data['wav']:
-                genfunc = ptttl_to_wav
-                ext = 'wav'
-            else:
-                genfunc = ptttl_to_mp3
-                ext = 'mp3'
-
+            wave = form.cleaned_data['waveform_type']
+            
             try:
-                genfunc(ptttl_data, ftemp, 0.5, wave)
+                success, data = ptttl_to_mp3(PTTTL_CLI_BIN, ptttl_data, wave)
             except Exception as e:
                 messages.add_message(request, messages.ERROR, str(e))
                 return render(request, 'ptttl.html', {'form': form})
 
-            with open(ftemp, 'rb') as fh:
-                mp3_data = fh.read()
+            if not success:
+                messages.add_message(request, messages.ERROR, data.strip())
+                return render(request, 'ptttl.html', {'form': form})
 
-            response = HttpResponse(mp3_data, content_type='audio/mpeg')
-            response['Content-Disposition'] = 'attachment; filename=rtttl.%s' % ext
-            response['Content-Length'] = os.path.getsize(ftemp)
-
-            os.close(fd)
-            os.remove(ftemp)
+            response = HttpResponse(data, content_type='audio/mpeg')
+            response['Content-Disposition'] = 'attachment; filename=rtttl.mp3'
+            response['Content-Length'] = len(data)
 
             with json_file_lock: 
                 attrs = read_json_file()

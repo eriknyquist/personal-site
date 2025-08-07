@@ -4,3 +4,6 @@
 [submodule "GithubPoacher"]
 	path = poacher
 	url = git@github.com:eriknyquist/GithubPoacher
+[submodule "ptttl_clone"]
+	path = ptttl_clone
+	url = git@github.com:eriknyquist/ptttl.git
