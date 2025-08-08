@@ -1,4 +1,14 @@
 <html>
+
+<style>
+.codeblock {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+</style>
+
 <head>
     {% include "common.html" %}
     {% include "modal.html" %}
@@ -109,8 +119,13 @@ d=4,o=5,b=100, f=7, v=10:
 <body>
 {% include "header.html" %}
 <div class="main">
+    <div style="text-align:center;">
+        <p style="background-color: #fcffd9;">
+        (If you liked this page, then you might also like <a href="https://ekn.io/music">this page</a>)
+        </p>
+    </div>
     <div class="heading">
-        <h1>Convert RTTTL to .wav and .mp3 audio</h1>
+        <h1>Convert RTTTL or PTTTL to .mp3 audio</h1>
     </div>
 
     <p>RTTTL (Ring Tone Text Transfer Language) is a method of storing
@@ -123,7 +138,7 @@ d=4,o=5,b=100, f=7, v=10:
     examples) to download an mp3 audio file that plays the tones dscribed in the
     RTTTL text you provided. The tones generated have a very slight attack/decay
     to avoid nasty clicks and pops. (also converts PTTTL, which is my hacky
-    extension of RTTTL that allows polyphony, scroll down for a full
+    extension of RTTTL that allows polyphony & vibrato - scroll down for a full
     description)</p>
 
     {% if messages %}
@@ -137,7 +152,7 @@ d=4,o=5,b=100, f=7, v=10:
     <div style="margin-top:40px;padding:20px 20px 20px 20px;background-color:#eee">
         <form action="/ptttl/" method=post>
             <div style="text-align:center;padding-bottom:25px">
-                <label>Sample RTTTL file: <select id="sampleselector" onchange="selectsample(this.value)">
+                <label>Sample RTTTL/PTTTL file: <select id="sampleselector" onchange="selectsample(this.value)">
                     <option selected="selected" value="none">None</option>
                     <option value="mkombat">Mortal Kombat</option>
                     <option value="blue">Blue</option>
@@ -187,145 +202,111 @@ d=4,o=5,b=100, f=7, v=10:
     <a target="_blank" href="https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language">RTTTL</a>
     format, used for monophonic ringtones.</p>
 
-    <div class="subheading">
-        <h2>Why?</h2>
-    </div>
-
-    <p>I needed a good way to store simple tones and melodies for some project.
-    RTTTL looked pretty good but only works for monophonic melodies.
-    I needed polyphony.</p>
-
-    <div class="heading">
-        <h1>PTTTL format</h1>
-    </div>
-
-    <p>Valid RTTTL strings are also valid PTTTL strings. A parser that properly handles
-    PTTTL can also handle RTTTL.</p>
-
-    <p>A PTTTL string is made up of three colon-seperated sections; the <b>name</b>
-    section, the <b>default values</b> section, and the <b>data</b> section.</p>
-
-    <p>Whitespace characters, empty lines, and lines beginning with a "#" character
+    <div class="section" id="ptttl-format">
+    <h1><a>PTTTL format</a></h1>
+    <p>Because PTTTL is a superset of RTTTL, valid RTTTL strings are also valid PTTTL strings.
+    A parser that properly handles PTTTL can also handle RTTTL.</p>
+    <p>A PTTTL string is made up of three colon-seperated sections; <strong>name</strong> section,
+    <strong>default values</strong> section, and <strong>data</strong> section.</p>
+    <p>Whitespace characters, empty lines, and lines beginning with a &quot;#&quot; character
     are ignored.</p>
-
-    <p>The initial "name" section is intended to contain the name of the ringtone
+    <p>The initial &quot;name&quot; section is intended to contain the name of the ringtone
     in the original RTTTL format. PTTTL requires this field to be present, to
     maintain backwards compatibility with RTTTL, but places no constraints on its
     contents.</p>
-
-    <div class="subheading">
-        <h2>Default values section</h2>
-    </div>
-
-    <p>The very first statement is the <b>default values</b> section and is identical to
-    the section of the same name from the RTTTL format.</p>
-
-    <div class="subheading">
-        <h3>Example</h3>
-    </div>
-
-    <div class="codeblock">
-        <code>b=123, d=8, o=4</code>
-    </div>
-
-    <div class="subheading">
-        <h3>Default values specification</h3>
-    </div>
-
-    <ul>
-        <li><b>b</b> - beat, tempo: tempo in BPM (Beats Per Minute)</li>
-        <li><b>d</b> - duration: default duration of a note if none is specified</li>
-        <li><b>o</b> - octave: default octave of a note if none is specified</li>
+    <div class="section" id="default-values-section">
+    <h2><a><em>default values</em> section</a></h2>
+    <p>The very first statement is the <em>default values</em> section, and it is the same as
+    the <em>default values</em> section from the RTTTL format, except with two additional
+    vibrato-related settings:</p>
+    <pre style="background-color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>
+b=123, d=8, o=4, f=7, v=10
+    </code></pre>
+    <ul class="simple">
+    <li><em>b</em> - beat, tempo: tempo in BPM (Beats Per Minute)</li>
+    <li><em>d</em> - duration: default duration of a note if none is specified</li>
+    <li><em>o</em> - octave: default octave of a note if none is specified</li>
+    <li><em>f</em> - frequency: default vibrato frequency if none is specified, in Hz</li>
+    <li><em>v</em> - variance: default vibrato variance from the main pitch if none is specified, in Hz</li>
     </ul>
-
-    <div class="subheading">
-        <h2>Data section</h2>
     </div>
-
+    <div class="section" id="data-section">
+    <h2><a><em>data</em> section</a></h2>
     <p>The PTTTL data section is just like the RTTTL data section, in that a melody
-    consists of multiple comma-seperated notes to be played sequentially. Unlike
+    consists of multiple comma-seperated notes to be played sequentially. <em>Unlike</em>
     RTTTL, PTTTL allows multiple melodys to be defined, separated by the vertical
-    pipe character ``|``, all of which will be played in unison.</p>
-
+    pipe character <b>|</b>, all of which will be played in unison.</p>
     <p>The format of a note is identical to that described by the RTTTL format. Each
     note includes, in sequence; a duration specifier, a standard music note, either
     a, b, c, d, e, f or g (optionally followed by '#' or 'b' for sharps and flats),
     and an octave specifier. If no duration or octave specifier are present, the
     default applies.</p>
-
-    <div class="subheading">
-        <h3>Durations</h3>
-    </div>
-
-    <p>Valid values for note duration are:</p>
-
-    <ul>
-    <li><b>1</b> - whole note</li>
-    <li><b>2</b> - half note</li>
-    <li><b>4</b> - quarter note</li>
-    <li><b>8</b> - eighth note</li>
-    <li><b>16</b> - sixteenth note</li>
-    <li><b>32</b> - thirty-second note</li>
+    <div class="section" id="durations">
+    <h3><a>Durations</a></h3>
+    <p>Valid values for note duration:</p>
+    <ul class="simple">
+    <li><strong>1</strong> - whole note</li>
+    <li><strong>2</strong> - half note</li>
+    <li><strong>4</strong> - quarter note</li>
+    <li><strong>8</strong> - eighth note</li>
+    <li><strong>16</strong> - sixteenth note</li>
+    <li><strong>32</strong> - thirty-second note</li>
     </ul>
-
-    <p>Dotted rhythm patterns can be formed by adding a period "." either
-    after the note letter (e.g. "c#.", or "c#.5"), or after the octave
-    number (e.g. "c#5.")</p>
-
-    <div class="subheading">
-        <h3>Notes</h3>
+    <p>Dotted rhythm patterns can be formed by adding a period &quot;.&quot; either
+    after the note letter (e.g. <b>c#.</b> or <b>c#.5</b>), or after the octave
+    number (e.g. <b>c#5.</b>)</p>
     </div>
-
+    <div class="section" id="notes">
+    <h3><a>Notes</a></h3>
     <p>Valid values for note pitch (non case-sensitive):</p>
-
-    <ul>
-        <li><b>P</b> - rest or pause</li>
-        <li><b>A</b></li>
-        <li><b>A#</b> / <b>Bb</b></li>
-        <li><b>B</b> / <b>Cb</b></li>
-        <li><b>C</b></li>
-        <li><b>C#</b> / <b>Db</b></li>
-        <li><b>D</b></li>
-        <li><b>D#</b> / <b>Eb</b></li>
-        <li><b>E</b> / <b>Fb</b></li>
-        <li><b>F</b> / <b>E#</b></li>
-        <li><b>F#</b> / <b>Gb</b></li>
-        <li><b>G</b></li>
-        <li><b>G#</b> / <b>Ab</b></li>
+    <ul class="simple">
+    <li><strong>P</strong> - rest or pause</li>
+    <li><strong>A</strong></li>
+    <li><strong>A#</strong> / <strong>Bb</strong></li>
+    <li><strong>B</strong> / <strong>Cb</strong></li>
+    <li><strong>C</strong></li>
+    <li><strong>C#</strong> / <strong>Db</strong></li>
+    <li><strong>D</strong></li>
+    <li><strong>D#</strong> / <strong>Eb</strong></li>
+    <li><strong>E</strong> / <strong>Fb</strong></li>
+    <li><strong>F</strong> / <strong>E#</strong></li>
+    <li><strong>F#</strong> / <strong>Gb</strong></li>
+    <li><strong>G</strong></li>
+    <li><strong>G#</strong> / <strong>Ab</strong></li>
     </ul>
-
-    <div class="subheading">
-        <h3>Octave</h3>
     </div>
-
-    <p>Valid values for note octave are between <b>0</b> and <b>8</b>.</p>
-
-    <div class="heading">
-        <h3>Example</h3>
+    <div class="section" id="octave">
+    <h3><a>Octave</a></h3>
+    <p>Valid values for note octave are between <strong>0</strong> and <strong>8</strong>.</p>
     </div>
-
+    <div class="section" id="vibrato">
+    <h3><a>Vibrato</a></h3>
+    <p>Optionally, vibrato may be enabled and configured for an individual note. This is
+    done by appending a <b>v</b> to the end of the note, and optionally frequency and variance
+    values seperated by a <b>-</b> character. For example:</p>
+    <ul class="simple">
+    <li><b>4c#v</b> refers to a C# quarter note with vibrato enabled, using default settings</li>
+    <li><b>4c#v10-15</b> refers to a C# quarter note with vibrato enabled, using a vibrato frequency of 10Hz,
+    with a maximum vibrato variance of 15Hz from the main pitch.</li>
+    </ul>
+    </div>
+    <div class="section" id="example">
+    <h3><a>Example</a></h3>
     <p>Consider the following PTTTL string:</p>
-
-    <div class="codeblock">
-<code>
+    <pre style="background-color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>
 # 123 beats-per-minute, default quarter note, default 4th octave
 Test Melody:
 b=123, d=4, o=4:
 
 16c, 8p, 16c | 16e, 8p, 16e | 16g5, 8p, 16g5
-</code>
-    </div>
-
+    </code></pre>
     <p>This would play 3 sixteenth notes simultaneously (C, octave 4; E, octave 4;
     G, octave 5), followed by an eighth note rest, followed by the same
     three sixteenth notes again</p>
-
-    <p>Note that the above sample is much easier to read if we put each melody
-    on a new line and align the notes in columns. This is the recommended way
-    to write PTTTL:</p>
-
-    <div class="codeblock" style="margin-bottom:50px">
-<code>
+    <p>Note that the above sample is much easier to read if we put each melody on a new
+    line and align the notes in columns. This is the recommended way to write
+    PTTTL:</p>
+    <pre style="background-color: #f0f0f0; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>
 # Nicely aligned
 Test Melody:
 b=123, d=4, o=4:
@@ -333,20 +314,19 @@ b=123, d=4, o=4:
 16c,  8p,  16c  |
 16e,  8p,  16e  |
 16g5, 8p,  16g5
-</code>
-    </div>
-
+    </code></pre>
     <p>In order to keep things readable for large PTTTL files with multiple
-    concurrent tracks, a semicolon character "<b>;</b>" can be used to further
-    break up melodies into more practical blocks. Just as the veritcal pipe
-    character "<b>|</b>" seperates <i>concurrent</i> tracks within a single
-    melody, the semicolon character seperates multiple <i>sequential</i>
-    melodies within a single data section. Melodies seperated by semicolons will be stitched
-    together, one after the other, in the final output.</p>
-
-    <p>Select the "Polyphonic example" sample file in the RTTTL/PTTTL-to-mp3
-    encoder at the top of this page to see a large polyphonic melody that uses
-    the semicolon character to help maintain readability.</p>
+    concurrent tracks, a semicolon character <b>;</b> can be used further break up
+    melodies into more practical blocks. Just as the veritcal pipe character <b>|</b>
+    seperates <em>concurrent</em> tracks within a single polyphonic melody, the semicolon
+    character seperates multiple <em>sequential</em> polyphonic melodies within a single
+    data section. Blocks of notes seperated by semicolons will be &quot;stitched together&quot;,
+    or concatenated, in the final output.</p>
+    <p>The semicolon does not affect any of the timings or pitch of the generated
+    tones; it just makes the PTTTL source a bit more readable, and gives you more
+    options for organizing the lines when writing music. For a good example of why the
+    semicolon is useful, have a look at the "Polyphonic example" sample file by
+    selecting it from the "Sample RTTTL/PTTTL file" from the dropdown at the top of this page.</p>
 
 {% include "footer.html" %}
 </body>
