@@ -167,14 +167,21 @@ def millerfamilyhistory(request):
     return render(request, 'millerfamilyhistory.html')
 
 def ptttl_to_mp3(ptttl_cli_bin, ptttl_text, wave_type):
-    result = subprocess.run(ptttl_cli_bin + " -w " + wave_type,
-                            input=ptttl_text.encode('ascii'), shell=True,
-                            stdout=subprocess.PIPE)
+    cmd = [ptttl_cli_bin, "-w", wave_type]
+    process = subprocess.Popen(cmd,
+                               shell=True,
+                               stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE,
+                               bufsize=0)
 
-    if result.returncode != 0:
-        return False, result.stdout.decode('ascii')
+    process.stdin.write(ptttl_text.encode('ascii'))
+    process.stdin.flush()
+    stdout, stderr = process.communicate()
 
-    wav_data = io.BytesIO(result.stdout)
+    if process.returncode != 0:
+        return False, stdout.decode('ascii')
+
+    wav_data = io.BytesIO(stdout)
     audio_segment = AudioSegment.from_wav(wav_data)
     mp3_data = io.BytesIO()
     audio_segment.export(mp3_data, format="mp3", bitrate="256k")
@@ -185,12 +192,12 @@ def ptttl(request):
         form = PTTTLForm(request.POST)
         if form.is_valid():
             ptttl_data = form.cleaned_data['ptttl']
-
             wave = form.cleaned_data['waveform_type']
             
             try:
                 success, data = ptttl_to_mp3(PTTTL_CLI_BIN, ptttl_data, wave)
             except Exception as e:
+                raise e
                 messages.add_message(request, messages.ERROR, str(e))
                 return render(request, 'ptttl.html', {'form': form})
 
