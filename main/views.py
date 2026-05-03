@@ -167,7 +167,10 @@ def millerfamilyhistory(request):
     return render(request, 'millerfamilyhistory.html')
 
 def ptttl_to_mp3(ptttl_cli_bin, ptttl_text, wave_type):
-    cmd = [ptttl_cli_bin, "-w", wave_type]
+    if not ptttl_text.endswith('\n'):
+        ptttl_text += '\n'
+
+    cmd = " ".join([ptttl_cli_bin, "-w", wave_type])
     process = subprocess.Popen(cmd,
                                shell=True,
                                stdin=subprocess.PIPE,
