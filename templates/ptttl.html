@@ -16,6 +16,8 @@
     <script>
     var samples = {};
 
+    samples["nokia"] = "NokiaTune:d=4,o=5,b=125:16e6,16d6,8f#5,8g#5,16c#6," +
+        "16b5,8d5,8e5,16b5,16a5,8c#5,8e5,4a5";
     samples["monty"] = "MontyPythonTheme:d=4,o=5,b=200:f6,8e6,d6,8c#6,c6,8b," +
         "a#,8a,8g,8a,8a#,a,8g,2c6,8p,8c6,8a,8p,8a,8a,8g#,8a,8f6,8p,8c6,8c6," +
         "8p,8a,8a#,8p,8a#,8a#,8p,8c6,2d6,8p,8a#,8g,8p,8g,8g,8f#,8g,8e6,8p," +
@@ -182,6 +184,7 @@ b=120, d=4, o=4, f=8, v=10 :
             <div style="text-align:center;padding-bottom:25px">
                 <label>Sample RTTTL/PTTTL file: <select id="sampleselector" onchange="selectsample(this.value)">
                     <option selected="selected" value="none">None</option>
+                    <option value="nokia">Nokia Ringtone</option>
                     <option value="mkombat">Mortal Kombat</option>
                     <option value="blue">Blue</option>
                     <option value="mimp">Mission Impossible</option>

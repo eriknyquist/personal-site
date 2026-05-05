@@ -9,11 +9,11 @@ class PTTTLForm(forms.Form):
         'placeholder': PTTTL_PLACEHOLDER, 'id': 'ptttl'}))
 
     waveform_type = forms.ChoiceField(
-            choices=[('sine', 'Sine'), ('square', 'Square'), ('sawtooth', 'Sawtooth'),
-                     ('triangle', 'Triangle')],
+            choices=[('nokia', 'Nokia 3310'), ('sine', 'Sine'), ('square', 'Square'),
+                     ('sawtooth', 'Sawtooth'), ('triangle', 'Triangle')],
             widget=forms.RadioSelect,
             label="Select waveform type",
-            initial='sine')
+            initial='nokia')
 
 class CalendarForm(forms.Form):
     title = forms.CharField(label='Calendar title', max_length=30)
